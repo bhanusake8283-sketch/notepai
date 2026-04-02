@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NotePai — My Notes</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --ink:#0e0d0b;--cream:#f5f0e8;--cream2:#ede7d8;
+      --muted:#8a8070;--gold:#c9972a;--gold-light:#f0c96a;
+      --surface:#161410;--card:#1c1a16;--border:rgba(245,240,232,0.1);
+    }
+    html,body{height:100%;overflow:hidden}
+    body{font-family:'DM Sans',sans-serif;background:var(--ink);color:var(--cream);display:flex;flex-direction:column}
+
+    /* ── TOP NAV ── */
+    .topbar{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:0 20px;height:52px;border-bottom:1px solid var(--border);
+      background:rgba(14,13,11,0.95);flex-shrink:0;
+    }
+    .logo{font-family:'Playfair Display',serif;font-size:20px;color:var(--cream);text-decoration:none}
+    .logo span{color:var(--gold)}
+    .topbar-right{display:flex;align-items:center;gap:14px}
+    .user-name{font-size:13px;color:var(--muted)}
+    .usage-bar-wrap{display:flex;align-items:center;gap:8px}
+    .usage-text{font-size:12px;color:var(--muted);white-space:nowrap}
+    .usage-track{width:80px;height:4px;background:rgba(245,240,232,0.12);border-radius:2px;overflow:hidden}
+    .usage-fill{height:100%;background:var(--gold);border-radius:2px;transition:width .3s}
+    .btn-logout{font-size:12px;color:var(--muted);background:none;border:1px solid var(--border);border-radius:6px;padding:5px 12px;cursor:pointer;font-family:'DM Sans',sans-serif}
+    .btn-logout:hover{color:var(--cream);border-color:rgba(245,240,232,0.25)}
+
+    /* ── MAIN LAYOUT ── */
+    .app-body{display:flex;flex:1;overflow:hidden}
+
+    /* ── SIDEBAR ── */
+    .sidebar{
+      width:240px;background:var(--surface);border-right:1px solid var(--border);
+      display:flex;flex-direction:column;flex-shrink:0;
+    }
+    .sidebar-head{padding:14px 14px 10px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+    .sidebar-title{font-size:11px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+    .btn-new{
+      display:flex;align-items:center;gap:5px;
+      background:var(--gold);color:var(--ink);border:none;
+      border-radius:6px;padding:5px 10px;font-size:12px;font-weight:500;
+      font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .2s;
+    }
+    .btn-new:hover{background:var(--gold-light)}
+    .notes-list{flex:1;overflow-y:auto;padding:6px}
+    .notes-list::-webkit-scrollbar{width:3px}
+    .notes-list::-webkit-scrollbar-thumb{background:rgba(245,240,232,0.15);border-radius:2px}
+    .note-item{
+      padding:10px 12px;border-radius:8px;cursor:pointer;
+      margin-bottom:2px;border:1px solid transparent;transition:all .15s;
+    }
+    .note-item:hover{background:rgba(245,240,232,0.05)}
+    .note-item.active{background:rgba(201,151,42,0.12);border-color:rgba(201,151,42,0.25)}
+    .note-item-title{font-size:13px;font-weight:500;color:var(--cream);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .note-item-prev{font-size:11px;color:var(--muted);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .note-item-date{font-size:10px;color:rgba(138,128,112,0.6);margin-top:3px}
+    .empty-notes{padding:24px 14px;text-align:center;color:var(--muted);font-size:13px;line-height:1.7}
+
+    /* ── EDITOR ── */
+    .editor-wrap{flex:1;display:flex;flex-direction:column;overflow:hidden}
+    .editor-toolbar{
+      display:flex;align-items:center;gap:6px;
+      padding:10px 16px;border-bottom:1px solid var(--border);
+      background:var(--surface);flex-wrap:wrap;
+    }
+    .ai-btn{
+      font-size:12px;padding:5px 12px;border-radius:20px;
+      border:1px solid var(--border);color:var(--muted);
+      background:transparent;cursor:pointer;font-family:'DM Sans',sans-serif;
+      transition:all .2s;white-space:nowrap;
+    }
+    .ai-btn:hover{background:rgba(201,151,42,0.12);color:var(--gold-light);border-color:rgba(201,151,42,0.3)}
+    .ai-btn.primary{background:rgba(201,151,42,0.15);color:var(--gold-light);border-color:rgba(201,151,42,0.35)}
+    .ai-btn:disabled{opacity:.4;cursor:not-allowed}
+    .toolbar-right{margin-left:auto;display:flex;align-items:center;gap:8px}
+    .btn-delete{font-size:12px;padding:5px 10px;border-radius:6px;border:1px solid var(--border);color:var(--muted);background:transparent;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s}
+    .btn-delete:hover{color:#f09595;border-color:rgba(226,75,74,0.4)}
+    .word-count{font-size:11px;color:rgba(138,128,112,0.6)}
+
+    .editor-area{flex:1;display:flex;flex-direction:column;overflow:hidden}
+    #note-title{
+      border:none;outline:none;padding:20px 24px 8px;
+      font-family:'Playfair Display',serif;font-size:22px;font-weight:600;
+      color:var(--cream);background:transparent;width:100%;
+    }
+    #note-title::placeholder{color:rgba(138,128,112,0.5)}
+    #note-body{
+      flex:1;border:none;outline:none;padding:8px 24px 20px;
+      font-family:'DM Sans',sans-serif;font-size:14px;line-height:1.8;
+      color:var(--cream2);background:transparent;resize:none;width:100%;
+    }
+    #note-body::placeholder{color:rgba(138,128,112,0.4)}
+
+    /* ── AI RESULT PANEL ── */
+    .ai-panel{
+      border-top:1px solid var(--border);background:var(--surface);
+      padding:14px 20px;max-height:200px;overflow-y:auto;display:none;
+    }
+    .ai-panel.show{display:block}
+    .ai-panel-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+    .ai-panel-label{font-size:11px;font-weight:500;color:var(--gold);text-transform:uppercase;letter-spacing:.06em}
+    .ai-panel-actions{display:flex;gap:6px}
+    .btn-apply{font-size:11px;padding:4px 10px;border-radius:6px;background:var(--gold);color:var(--ink);border:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:500}
+    .btn-apply:hover{background:var(--gold-light)}
+    .btn-dismiss{font-size:11px;padding:4px 10px;border-radius:6px;background:transparent;color:var(--muted);border:1px solid var(--border);cursor:pointer;font-family:'DM Sans',sans-serif}
+    .btn-dismiss:hover{color:var(--cream)}
+    .ai-result-text{font-size:13px;color:var(--cream2);line-height:1.75;white-space:pre-wrap}
+    .ai-loading{font-size:13px;color:var(--muted);display:flex;align-items:center;gap:8px}
+    .spinner{width:14px;height:14px;border:2px solid rgba(201,151,42,0.2);border-top-color:var(--gold);border-radius:50%;animation:spin .6s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    /* ── NO NOTE SELECTED ── */
+    .no-note{
+      flex:1;display:flex;flex-direction:column;
+      align-items:center;justify-content:center;
+      color:var(--muted);text-align:center;padding:40px;
+    }
+    .no-note-icon{font-size:48px;margin-bottom:16px;opacity:.4}
+    .no-note-title{font-family:'Playfair Display',serif;font-size:22px;color:rgba(245,240,232,0.4);margin-bottom:8px}
+    .no-note-sub{font-size:13px;line-height:1.7;color:var(--muted)}
+
+    /* ── TOAST ── */
+    #toast{
+      position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(60px);
+      background:#1c1a16;border:1px solid var(--border);border-radius:8px;
+      padding:10px 18px;font-size:13px;color:var(--cream);
+      transition:transform .3s ease;z-index:999;white-space:nowrap;
+    }
+    #toast.show{transform:translateX(-50%) translateY(0)}
+
+    /* ── UPGRADE BANNER ── */
+    .upgrade-banner{
+      background:rgba(201,151,42,0.1);border-top:1px solid rgba(201,151,42,0.2);
+      padding:10px 20px;display:flex;align-items:center;justify-content:space-between;
+      font-size:13px;color:var(--gold-light);flex-shrink:0;
+    }
+    .btn-upgrade{background:var(--gold);color:var(--ink);border:none;border-radius:6px;padding:6px 14px;font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif}
+    .btn-upgrade:hover{background:var(--gold-light)}
+  </style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <a href="index.html" class="logo">Note<span>Pai</span></a>
+  <div class="topbar-right">
+    <div class="usage-bar-wrap">
+      <span class="usage-text" id="usage-text">Loading...</span>
+      <div class="usage-track"><div class="usage-fill" id="usage-fill" style="width:0%"></div></div>
+    </div>
+    <span class="user-name" id="user-name"></span>
+    <button class="btn-logout" onclick="logout()">Log out</button>
+  </div>
+</div>
+
+<!-- MAIN BODY -->
+<div class="app-body">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sidebar-head">
+      <span class="sidebar-title">My Notes</span>
+      <button class="btn-new" onclick="createNote()">+ New</button>
+    </div>
+    <div class="notes-list" id="notes-list">
+      <div class="empty-notes">Loading your notes...</div>
+    </div>
+  </div>
+
+  <!-- EDITOR -->
+  <div class="editor-wrap">
+
+    <!-- Toolbar -->
+    <div class="editor-toolbar" id="editor-toolbar" style="display:none">
+      <button class="ai-btn primary" onclick="runAI('improve')">✦ Improve writing</button>
+      <button class="ai-btn" onclick="runAI('summarize')">Summarize</button>
+      <button class="ai-btn" onclick="runAI('bullets')">Make bullets</button>
+      <button class="ai-btn" onclick="runAI('ideas')">Get ideas</button>
+      <button class="ai-btn" onclick="runAI('translate')">Translate to Hindi</button>
+      <div class="toolbar-right">
+        <span class="word-count" id="word-count">0 words</span>
+        <button class="btn-delete" onclick="deleteNote()">Delete</button>
+      </div>
+    </div>
+
+    <!-- Note editor -->
+    <div class="editor-area" id="editor-area" style="display:none">
+      <input id="note-title" type="text" placeholder="Note title..." oninput="onEdit()"/>
+      <textarea id="note-body" placeholder="Start writing here... or click an AI button above to get started." oninput="onEdit()"></textarea>
+    </div>
+
+    <!-- AI result panel -->
+    <div class="ai-panel" id="ai-panel">
+      <div class="ai-panel-header">
+        <span class="ai-panel-label" id="ai-panel-label">AI result</span>
+        <div class="ai-panel-actions">
+          <button class="btn-apply" id="btn-apply" onclick="applyAI()" style="display:none">Apply to note</button>
+          <button class="btn-dismiss" onclick="closeAIPanel()">Dismiss</button>
+        </div>
+      </div>
+      <div class="ai-loading" id="ai-loading"><div class="spinner"></div> AI is thinking...</div>
+      <div class="ai-result-text" id="ai-result"></div>
+    </div>
+
+    <!-- No note selected -->
+    <div class="no-note" id="no-note">
+      <div class="no-note-icon">✦</div>
+      <div class="no-note-title">Select a note or create one</div>
+      <div class="no-note-sub">Click "+ New" to create your first note.<br>Your notes are saved automatically.</div>
+    </div>
+
+    <!-- Upgrade banner (shown when limit hit) -->
+    <div class="upgrade-banner" id="upgrade-banner" style="display:none">
+      <span>You have used all 5 free AI actions today.</span>
+      <button class="btn-upgrade" onclick="window.location.href='index.html#pricing'">Upgrade to Pro — $9/month</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- Toast notification -->
+<div id="toast"></div>
+
+<script>
+const API = 'http://localhost:3001/api';
+const token = localStorage.getItem('notepaiai_token');
+let currentNoteId = null;
+let saveTimer = null;
+let lastAIResult = '';
+let lastAIAction = '';
+
+// ── Redirect if not logged in ─────────────────
+if (!token) window.location.href = 'index.html';
+
+const headers = () => ({
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer ' + token
+});
+
+// ── Toast helper ──────────────────────────────
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ── Logout ────────────────────────────────────
+function logout() {
+  localStorage.removeItem('notepaiai_token');
+  window.location.href = 'index.html';
+}
+
+// ── Load user info ────────────────────────────
+async function loadUser() {
+  try {
+    const res = await fetch(API + '/auth/me', { headers: headers() });
+    if (!res.ok) { logout(); return; }
+    const { user } = await res.json();
+    document.getElementById('user-name').textContent = 'Hi, ' + user.name.split(' ')[0] + ' 👋';
+  } catch {}
+}
+
+// ── Load usage stats ──────────────────────────
+async function loadUsage() {
+  try {
+    const res = await fetch(API + '/usage', { headers: headers() });
+    const data = await res.json();
+    const used = data.actionsUsed || 0;
+    const limit = data.limit >= 999999 ? '∞' : data.limit;
+    const pct = data.limit >= 999999 ? 5 : Math.round((used / data.limit) * 100);
+
+    document.getElementById('usage-text').textContent = `AI: ${used}/${limit} today`;
+    document.getElementById('usage-fill').style.width = pct + '%';
+
+    if (data.actionsLeft === 0 && data.plan === 'free') {
+      document.getElementById('upgrade-banner').style.display = 'flex';
+    }
+  } catch {
+    document.getElementById('usage-text').textContent = 'AI: 5/5 today';
+  }
+}
+
+// ── Load all notes ────────────────────────────
+async function loadNotes() {
+  try {
+    const res = await fetch(API + '/notes', { headers: headers() });
+    const data = await res.json();
+    renderNotesList(data.notes || []);
+  } catch {
+    document.getElementById('notes-list').innerHTML =
+      '<div class="empty-notes">Could not load notes.<br>Is the server running?</div>';
+  }
+}
+
+// ── Render sidebar list ───────────────────────
+function renderNotesList(notes) {
+  const list = document.getElementById('notes-list');
+  if (!notes.length) {
+    list.innerHTML = '<div class="empty-notes">No notes yet.<br>Click "+ New" to create one!</div>';
+    return;
+  }
+  list.innerHTML = notes.map(n => `
+    <div class="note-item ${n.id === currentNoteId ? 'active' : ''}"
+         onclick="openNote('${n.id}','${esc(n.title)}',${JSON.stringify(n.body)})">
+      <div class="note-item-title">${n.title || 'Untitled note'}</div>
+      <div class="note-item-prev">${(n.body || '').slice(0, 50) || 'No content yet'}</div>
+      <div class="note-item-date">${new Date(n.updated_at).toLocaleDateString('en-US',{month:'short',day:'numeric'})}</div>
+    </div>`).join('');
+}
+function esc(s) { return (s||'').replace(/'/g,"\\'"); }
+
+// ── Open a note in editor ─────────────────────
+function openNote(id, title, body) {
+  currentNoteId = id;
+  document.getElementById('note-title').value = title || '';
+  document.getElementById('note-body').value = body || '';
+  document.getElementById('editor-area').style.display = 'flex';
+  document.getElementById('editor-toolbar').style.display = 'flex';
+  document.getElementById('no-note').style.display = 'none';
+  closeAIPanel();
+  updateWordCount();
+  // highlight active in sidebar
+  document.querySelectorAll('.note-item').forEach(el => el.classList.remove('active'));
+  event && event.currentTarget && event.currentTarget.classList.add('active');
+}
+
+// ── Create new note ───────────────────────────
+async function createNote() {
+  try {
+    const res = await fetch(API + '/notes', {
+      method: 'POST', headers: headers(),
+      body: JSON.stringify({ title: '', body: '' })
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      if (data.upgrade) {
+        showToast('Free plan: 15 notes max. Upgrade for unlimited!');
+        document.getElementById('upgrade-banner').style.display = 'flex';
+      }
+      return;
+    }
+    await loadNotes();
+    openNote(data.note.id, '', '');
+    currentNoteId = data.note.id;
+    document.getElementById('note-title').focus();
+    showToast('New note created');
+  } catch { showToast('Server offline — check terminal'); }
+}
+
+// ── Auto-save on typing ───────────────────────
+function onEdit() {
+  updateWordCount();
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(saveNote, 1500);
+}
+
+async function saveNote() {
+  if (!currentNoteId) return;
+  const title = document.getElementById('note-title').value;
+  const body  = document.getElementById('note-body').value;
+  try {
+    await fetch(API + '/notes/' + currentNoteId, {
+      method: 'PUT', headers: headers(),
+      body: JSON.stringify({ title, body, folder: 'general', tags: [] })
+    });
+    // refresh sidebar silently
+    const res = await fetch(API + '/notes', { headers: headers() });
+    const data = await res.json();
+    renderNotesList(data.notes || []);
+  } catch {}
+}
+
+// ── Word count ────────────────────────────────
+function updateWordCount() {
+  const body = document.getElementById('note-body').value;
+  const words = body.trim() ? body.trim().split(/\s+/).length : 0;
+  document.getElementById('word-count').textContent = words + ' word' + (words !== 1 ? 's' : '');
+}
+
+// ── Delete note ───────────────────────────────
+async function deleteNote() {
+  if (!currentNoteId) return;
+  if (!confirm('Delete this note? This cannot be undone.')) return;
+  try {
+    await fetch(API + '/notes/' + currentNoteId, { method: 'DELETE', headers: headers() });
+    currentNoteId = null;
+    document.getElementById('editor-area').style.display = 'none';
+    document.getElementById('editor-toolbar').style.display = 'none';
+    document.getElementById('no-note').style.display = 'flex';
+    closeAIPanel();
+    await loadNotes();
+    showToast('Note deleted');
+  } catch { showToast('Could not delete note'); }
+}
+
+// ── Run AI action ─────────────────────────────
+async function runAI(action) {
+  const body = document.getElementById('note-body').value;
+  if (!body.trim()) { showToast('Write something first!'); return; }
+
+  const labels = {
+    improve: '✦ Improved writing',
+    summarize: 'Summary',
+    bullets: 'Bullet points',
+    ideas: 'Ideas & suggestions',
+    translate: 'Hindi translation'
+  };
+  const canApply = ['improve','bullets','translate'].includes(action);
+
+  lastAIAction = action;
+  const panel = document.getElementById('ai-panel');
+  panel.classList.add('show');
+  document.getElementById('ai-loading').style.display = 'flex';
+  document.getElementById('ai-result').textContent = '';
+  document.getElementById('ai-panel-label').textContent = labels[action];
+  document.getElementById('btn-apply').style.display = 'none';
+
+  // disable all AI buttons while loading
+  document.querySelectorAll('.ai-btn').forEach(b => b.disabled = true);
+
+  try {
+    const res = await fetch(API + '/ai', {
+      method: 'POST', headers: headers(),
+      body: JSON.stringify({ action, text: body })
+    });
+    const data = await res.json();
+
+    document.getElementById('ai-loading').style.display = 'none';
+
+    if (!res.ok) {
+      if (data.upgrade) {
+        document.getElementById('upgrade-banner').style.display = 'flex';
+        panel.classList.remove('show');
+        showToast('Daily AI limit reached — upgrade to Pro!');
+      } else {
+        document.getElementById('ai-result').textContent = data.error || 'Something went wrong.';
+      }
+      return;
+    }
+
+    lastAIResult = data.result;
+    document.getElementById('ai-result').textContent = data.result;
+    if (canApply) document.getElementById('btn-apply').style.display = 'inline-block';
+
+    // update usage
+    loadUsage();
+    showToast('AI done ✓');
+
+  } catch {
+    document.getElementById('ai-loading').style.display = 'none';
+    document.getElementById('ai-result').textContent = 'Cannot reach server. Is the backend running?';
+  } finally {
+    document.querySelectorAll('.ai-btn').forEach(b => b.disabled = false);
+  }
+}
+
+// ── Apply AI result to note ───────────────────
+function applyAI() {
+  if (!lastAIResult) return;
+  document.getElementById('note-body').value = lastAIResult;
+  closeAIPanel();
+  onEdit();
+  showToast('Applied to note ✓');
+}
+
+// ── Close AI panel ────────────────────────────
+function closeAIPanel() {
+  document.getElementById('ai-panel').classList.remove('show');
+  document.getElementById('ai-result').textContent = '';
+  document.getElementById('ai-loading').style.display = 'none';
+  lastAIResult = '';
+}
+
+// ── Init ──────────────────────────────────────
+(async () => {
+  await loadUser();
+  await loadNotes();
+  await loadUsage();
+})();
+</script>
+</body>
+</html>

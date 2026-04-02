@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NotePai — The AI Notepad for Students & Freelancers</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ══════════════════════════════
+     NAV
+══════════════════════════════ -->
+<nav>
+  <a href="#" class="logo">Note<span>Pai</span></a>
+  <div class="nav-links">
+    <a href="#features">Features</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#faq">FAQ</a>
+    <a href="#" class="nav-cta" onclick="openAuth();return false;" id="nav-cta-btn">Start free</a>
+  </div>
+</nav>
+
+
+<!-- ══════════════════════════════
+     HERO
+══════════════════════════════ -->
+<section class="hero">
+  <div class="hero-tag">
+    <div class="hero-tag-dot"></div>
+    AI-powered notes for thinkers
+  </div>
+
+  <h1>Your notes.<br><em>Supercharged</em> by AI.</h1>
+
+  <p class="hero-sub">
+    Write once. Let AI summarize, improve, translate, and turn your notes
+    into something great — in seconds.
+  </p>
+
+  <div class="hero-actions">
+    <a href="#" class="btn-primary" onclick="openAuth();return false;">Start for free — no credit card</a>
+    <a href="#features" class="btn-ghost">See how it works</a>
+  </div>
+
+  <p class="hero-note">Trusted by 2,400+ students and freelancers across the US</p>
+
+  <!-- App Mockup -->
+  <div class="mockup-wrap">
+    <div class="mockup">
+      <div class="mockup-bar">
+        <div class="dot-r"></div>
+        <div class="dot-y"></div>
+        <div class="dot-g"></div>
+        <div class="mockup-url">notepai.com/app</div>
+      </div>
+      <div class="mockup-body">
+        <div class="mockup-sidebar">
+          <div class="mockup-sidebar-title">My Notes</div>
+          <div class="mock-note active">
+            <div class="mock-note-title">Client proposal</div>
+            <div class="mock-note-prev">Revised draft with AI...</div>
+          </div>
+          <div class="mock-note">
+            <div class="mock-note-title">Bio 101 lecture</div>
+            <div class="mock-note-prev">Mitosis, meiosis...</div>
+          </div>
+          <div class="mock-note">
+            <div class="mock-note-title">Weekly goals</div>
+            <div class="mock-note-prev">Ship landing page...</div>
+          </div>
+        </div>
+        <div class="mockup-editor">
+          <div class="mock-title">Client proposal — Brand refresh</div>
+          <div class="mock-text">
+            We propose a complete brand overhaul for Q1, focusing on visual identity,
+            tone of voice, and digital presence. Deliverables include logo suite,
+            color system, and a 30-page brand guidelines document...
+            <br><br>
+            <span style="color:#c9972a; font-size:12px;">
+              ✦ AI improved clarity and removed 3 filler sentences
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="mock-ai-bar">
+        <button class="mock-btn lit">✦ Improve writing</button>
+        <button class="mock-btn">Summarize</button>
+        <button class="mock-btn">Make bullets</button>
+        <button class="mock-btn">Get ideas</button>
+        <button class="mock-btn">Export PDF</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════
+     PROOF BAR
+══════════════════════════════ -->
+<div class="proof-bar reveal">
+  <div class="proof-item">
+    <div class="proof-num">2,400+</div>
+    <div class="proof-label">Active users</div>
+  </div>
+  <div class="proof-item">
+    <div class="proof-num">4.9 ★</div>
+    <div class="proof-label">Average rating</div>
+  </div>
+  <div class="proof-item">
+    <div class="proof-num">18 min</div>
+    <div class="proof-label">Saved per day, on average</div>
+  </div>
+  <div class="proof-item">
+    <div class="proof-num">$0</div>
+    <div class="proof-label">To get started</div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════
+     FEATURES
+══════════════════════════════ -->
+<section class="features" id="features">
+  <div class="section-label reveal">What NotePai does</div>
+  <h2 class="reveal">Everything your notes<br><em>deserve</em> to be.</h2>
+  <p class="section-sub reveal">
+    Stop staring at a blank page. NotePai's AI turns your rough thoughts
+    into polished, organized, shareable work.
+  </p>
+
+  <div class="features-grid reveal">
+
+    <div class="feat-card">
+      <div class="feat-icon">
+        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12"/>
+        </svg>
+      </div>
+      <div class="feat-title">AI writing improvement</div>
+      <div class="feat-desc">
+        Paste in rough notes, get back clear, professional writing.
+        Works for essays, emails, proposals, and study summaries.
+      </div>
+      <div class="feat-tag">Most used feature</div>
+    </div>
+
+    <div class="feat-card">
+      <div class="feat-icon">
+        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25Z"/>
+        </svg>
+      </div>
+      <div class="feat-title">One-click summarize</div>
+      <div class="feat-desc">
+        Turn a 500-word lecture note into a 5-line summary you can review
+        the night before the exam. Students love this.
+      </div>
+      <div class="feat-tag">Students</div>
+    </div>
+
+    <div class="feat-card">
+      <div class="feat-icon">
+        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 1 0-7.517 0c.85.493 1.509 1.333 1.509 2.316V18"/>
+        </svg>
+      </div>
+      <div class="feat-title">AI idea generator</div>
+      <div class="feat-desc">
+        Stuck on what to write next? Share your note and AI suggests 5
+        directions, angles, or next steps to keep you moving.
+      </div>
+      <div class="feat-tag">Freelancers</div>
+    </div>
+
+    <div class="feat-card">
+      <div class="feat-icon">
+        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3"/>
+        </svg>
+      </div>
+      <div class="feat-title">Export to PDF instantly</div>
+      <div class="feat-desc">
+        Turn any note into a clean, formatted PDF. Submit assignments,
+        send client reports, or save your work beautifully.
+      </div>
+      <div class="feat-tag">Pro feature</div>
+    </div>
+
+    <div class="feat-card">
+      <div class="feat-icon">
+        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"/>
+        </svg>
+      </div>
+      <div class="feat-title">AI search across notes</div>
+      <div class="feat-desc">
+        Ask "what did I write about my project deadline?" and AI finds
+        the answer across all your notes instantly.
+      </div>
+      <div class="feat-tag">Pro feature</div>
+    </div>
+
+    <div class="feat-card">
+      <div class="feat-icon">
+        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.76c0 1.6 1.123 2.994 2.707 3.227 1.068.157 2.148.279 3.238.364.466.037.893.281 1.153.671L12 21l2.652-3.978c.26-.39.687-.634 1.153-.67 1.09-.086 2.17-.208 3.238-.365 1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z"/>
+        </svg>
+      </div>
+      <div class="feat-title">Synced across all devices</div>
+      <div class="feat-desc">
+        Write on your laptop, review on your phone. Your notes are always
+        there, always up to date, never lost.
+      </div>
+      <div class="feat-tag">All plans</div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════
+     TESTIMONIALS
+══════════════════════════════ -->
+<section id="testimonials">
+  <div class="section-label reveal">Real users, real results</div>
+  <h2 class="reveal">People actually <em>love</em> using it.</h2>
+
+  <div class="testi-grid reveal">
+
+    <div class="testi-card">
+      <div class="stars">★★★★★</div>
+      <div class="testi-text">
+        "I use NotePai to rewrite all my rough lecture notes before exams.
+        It turns messy bullet points into actual readable summaries.
+        My GPA went up a full point this semester."
+      </div>
+      <div class="testi-author">
+        <div class="testi-avatar" style="background:#B5D4F4; color:#0C447C;">JM</div>
+        <div>
+          <div class="testi-name">Jordan M.</div>
+          <div class="testi-role">Junior, University of Texas</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testi-card">
+      <div class="stars">★★★★★</div>
+      <div class="testi-text">
+        "As a freelance copywriter, I'm constantly juggling notes for 6 clients
+        at once. The AI search feature alone is worth $9/month — I can find
+        anything in seconds."
+      </div>
+      <div class="testi-author">
+        <div class="testi-avatar" style="background:#9FE1CB; color:#085041;">SC</div>
+        <div>
+          <div class="testi-name">Sarah C.</div>
+          <div class="testi-role">Freelance copywriter, Austin TX</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testi-card">
+      <div class="stars">★★★★★</div>
+      <div class="testi-text">
+        "I dump all my business ideas here and hit 'Get ideas' — it gives me
+        angles I never would have thought of. Replaced 3 other apps for me.
+        Honestly can't work without it now."
+      </div>
+      <div class="testi-author">
+        <div class="testi-avatar" style="background:#F5C4B3; color:#712B13;">RK</div>
+        <div>
+          <div class="testi-name">Ryan K.</div>
+          <div class="testi-role">Solopreneur, Denver CO</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════
+     HOW IT WORKS
+══════════════════════════════ -->
+<section class="how" id="how">
+  <div class="section-label reveal">Simple by design</div>
+  <h2 class="reveal">Up and running in<br><em>60 seconds</em> flat.</h2>
+
+  <div class="steps-grid reveal">
+    <div class="step-card">
+      <div class="step-num">01</div>
+      <div class="step-title">Create your account</div>
+      <div class="step-desc">
+        Sign up with Google or email. No credit card. You're in the app in
+        under a minute — no tutorials, no onboarding maze.
+      </div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">02</div>
+      <div class="step-title">Write anything</div>
+      <div class="step-desc">
+        Lecture notes, client ideas, meeting takeaways, journal entries.
+        Write the way you naturally think — messy drafts welcome.
+      </div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">03</div>
+      <div class="step-title">Hit an AI button</div>
+      <div class="step-desc">
+        Summarize, improve, bullet-ize, or search. Watch your notes
+        transform in under 5 seconds. Apply or discard — you're always in control.
+      </div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">04</div>
+      <div class="step-title">Export and share</div>
+      <div class="step-desc">
+        Download as PDF, copy as Markdown, or share a link. Your polished
+        output, ready for class, clients, or your portfolio.
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════
+     PRICING
+══════════════════════════════ -->
+<section id="pricing">
+  <div class="section-label reveal">Simple pricing</div>
+  <h2 class="reveal">Start free.<br>Upgrade when you're <em>ready.</em></h2>
+  <p class="section-sub reveal">
+    No hidden fees. Cancel anytime. Students get the full Pro experience
+    for less than a Starbucks a month.
+  </p>
+
+  <div class="pricing-grid reveal">
+
+    <!-- Free -->
+    <div class="price-card">
+      <div class="price-name">Free</div>
+      <div class="price-val">$0 <span>/month</span></div>
+      <div class="price-desc">Everything you need to get started.</div>
+      <div class="price-feats">
+        <div class="price-feat"><div class="check"><svg fill="none" stroke-width="2.5" viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>15 notes</div>
+        <div class="price-feat"><div class="check"><svg fill="none" stroke-width="2.5" viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>5 AI actions per day</div>
+        <div class="price-feat"><div class="check"><svg fill="none" stroke-width="2.5" viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>Summarize + improve writing</div>
+        <div class="price-feat"><div class="check"><svg fill="none" stroke-width="2.5" viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>Synced across devices</div>
+      </div>
+      <a href="#" class="price-btn outline" onclick="openAuth();return false;">Get started free</a>
+    </div>
+
+    <!-- Pro (featured) -->
+    <div class="price-card featured">
+      <div class="featured-badge">Most popular</div>
+      <div class="price-name">Pro</div>
+      <div class="price-val">$9 <span>/month</span></div>
+      <div class="price-desc">For students and freelancers who are serious about their work.</div>
+      <div class="price-feats">
+        <div class="price-feat"><div class="check"><svg fill="none" stroke-width="2.5" viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>Unlimited notes</div>
+        <div class="price-feat"><div class="check"><svg fill="none" stroke-width="2.5" viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>Unlimited AI actions</div>
+        <div class="price-feat"><div class="check"><svg fill="none" stroke-width="2.5" viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>All 8 AI features</div>
+        <div class="price-feat"><div class="check"><svg fill="none" stroke-width="2.5" viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>PDF export</div>
+        <div class="price-feat"><div class="check"><svg fill="none" stroke-width="2.5" viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>AI search across all notes</div>
+        <div class="price-feat"><div class="check"><svg fill="none" stroke-width="2.5" viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>Folders + smart tags</div>
+        <div class="price-feat"><div class="check"><svg fill="none" stroke-width="2.5" viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>Priority support</div>
+      </div>
+      <a href="#" class="price-btn solid" onclick="openAuth('pro');return false;">Start Pro — $9/month</a>
+    </div>
+
+    <!-- Team -->
+    <div class="price-card">
+      <div class="price-name">Team</div>
+      <div class="price-val">$19 <span>/seat/mo</span></div>
+      <div class="price-desc">For small teams and agencies who think and create together.</div>
+      <div class="price-feats">
+        <div class="price-feat"><div class="check"><svg fill="none" stroke-width="2.5" viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>Everything in Pro</div>
+        <div class="price-feat"><div class="check"><svg fill="none" stroke-width="2.5" viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>Shared team notebooks</div>
+        <div class="price-feat"><div class="check"><svg fill="none" stroke-width="2.5" viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>Admin dashboard</div>
+        <div class="price-feat"><div class="check"><svg fill="none" stroke-width="2.5" viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>Billing in one place</div>
+      </div>
+      <a href="#" class="price-btn outline">Talk to us</a>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════
+     FAQ
+══════════════════════════════ -->
+<section class="features" id="faq">
+  <div class="section-label reveal">Common questions</div>
+  <h2 class="reveal">Got questions?<br>We've got <em>answers.</em></h2>
+
+  <div class="faq-list reveal">
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Is my data private and secure?
+        <span class="faq-arrow">+</span>
+      </button>
+      <div class="faq-a">
+        Yes. Your notes are encrypted at rest and in transit. We never sell your
+        data or use your notes to train AI models. You own everything you write.
+        We're GDPR and CCPA compliant.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        What AI model does NotePai use?
+        <span class="faq-arrow">+</span>
+      </button>
+      <div class="faq-a">
+        Free users get Google Gemini Flash — fast and capable. Pro users get
+        access to Claude (Anthropic) for higher-quality writing improvement and
+        more nuanced responses. You can switch between models in settings.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Can I cancel anytime?
+        <span class="faq-arrow">+</span>
+      </button>
+      <div class="faq-a">
+        Absolutely. Cancel from your account settings in one click — no emails,
+        no phone calls, no hoops. Your notes stay accessible on the free plan
+        even after you cancel.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Does it work on mobile?
+        <span class="faq-arrow">+</span>
+      </button>
+      <div class="faq-a">
+        NotePai works beautifully in any mobile browser — no app download needed.
+        A native iOS and Android app is on the roadmap for Q3 2026.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Is there a student discount?
+        <span class="faq-arrow">+</span>
+      </button>
+      <div class="faq-a">
+        Yes! Students with a .edu email get 30% off Pro — just $6.30/month.
+        Email us at hello@notepai.com with your student email to claim it.
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════
+     FINAL CTA
+══════════════════════════════ -->
+<section class="cta-section">
+  <div class="section-label reveal">Get started today</div>
+  <h2 style="margin: 0 auto;" class="reveal">
+    Stop struggling with<br>notes. Start <em>flying.</em>
+  </h2>
+  <p class="section-sub reveal" style="margin: 16px auto 44px;">
+    Join 2,400+ students and freelancers using AI to write better,
+    think clearer, and get more done.
+  </p>
+  <div class="hero-actions reveal">
+    <a href="#" class="btn-primary" onclick="openAuth();return false;">Start free — no credit card</a>
+    <a href="#features" class="btn-ghost">See all features</a>
+  </div>
+  <p class="hero-note reveal" style="margin-top: 20px;">
+    30-second signup. Works instantly. Cancel anytime.
+  </p>
+</section>
+
+
+<!-- ══════════════════════════════
+     FOOTER
+══════════════════════════════ -->
+<footer>
+  <a href="#" class="logo">Note<span>Pai</span></a>
+  <div class="footer-links">
+    <a href="#">Privacy Policy</a>
+    <a href="#">Terms of Service</a>
+    <a href="#">Contact</a>
+    <a href="#">Blog</a>
+  </div>
+  <div class="footer-copy">© 2026 NotePai. Made with AI.</div>
+</footer>
+
+<script src="script.js"></script>
+
+<!-- ══════════════════════════════
+     AUTH MODAL STYLES
+══════════════════════════════ -->
+<style>
+/* Overlay backdrop */
+#auth-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  backdrop-filter: blur(4px);
+}
+#auth-overlay.open {
+  display: flex;
+  animation: fadeIn 0.2s ease;
+}
+
+/* Modal card */
+#auth-modal {
+  background: #1c1a16;
+  border: 1px solid rgba(201,151,42,0.25);
+  border-radius: 20px;
+  padding: 40px 36px;
+  width: 100%;
+  max-width: 420px;
+  position: relative;
+  animation: slideUp 0.25s ease;
+}
+
+/* Close button */
+#auth-close {
+  position: absolute;
+  top: 16px; right: 18px;
+  background: none; border: none;
+  color: #8a8070; font-size: 22px;
+  cursor: pointer; line-height: 1;
+  transition: color 0.2s;
+}
+#auth-close:hover { color: #f5f0e8; }
+
+/* Logo inside modal */
+.auth-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px; font-weight: 600;
+  color: #f5f0e8; text-align: center;
+  display: block; margin-bottom: 28px;
+  text-decoration: none;
+}
+.auth-logo span { color: #c9972a; }
+
+/* Title */
+.auth-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 26px; font-weight: 600;
+  color: #f5f0e8; text-align: center;
+  margin-bottom: 6px;
+}
+.auth-sub {
+  font-size: 14px; color: #8a8070;
+  text-align: center; margin-bottom: 28px;
+}
+
+/* Plan badge (shows when clicking Pro) */
+#auth-plan-badge {
+  display: none;
+  background: rgba(201,151,42,0.15);
+  border: 1px solid rgba(201,151,42,0.35);
+  border-radius: 8px; padding: 10px 14px;
+  margin-bottom: 20px;
+  font-size: 13px; color: #f0c96a;
+  text-align: center;
+}
+#auth-plan-badge.show { display: block; }
+
+/* Error box */
+#auth-error {
+  display: none;
+  background: rgba(226,75,74,0.12);
+  border: 1px solid rgba(226,75,74,0.3);
+  border-radius: 8px; padding: 10px 14px;
+  font-size: 13px; color: #f09595;
+  margin-bottom: 16px; line-height: 1.5;
+}
+#auth-error.show { display: block; }
+
+/* Fields */
+.auth-field { margin-bottom: 14px; }
+.auth-field label {
+  display: block; font-size: 13px;
+  color: #8a8070; margin-bottom: 5px;
+}
+.auth-field input {
+  width: 100%;
+  background: rgba(245,240,232,0.06);
+  border: 1px solid rgba(245,240,232,0.12);
+  border-radius: 9px;
+  padding: 12px 14px;
+  font-size: 14px; color: #f5f0e8;
+  font-family: 'DM Sans', sans-serif;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.auth-field input:focus {
+  border-color: rgba(201,151,42,0.55);
+}
+.auth-field input::placeholder { color: #5a5248; }
+
+/* Name field — hidden by default */
+#auth-name-field { display: none; }
+#auth-name-field.show { display: block; }
+
+/* Submit button */
+#auth-submit {
+  width: 100%;
+  background: #c9972a; color: #0e0d0b;
+  border: none; border-radius: 9px;
+  padding: 14px; margin-top: 6px;
+  font-size: 15px; font-weight: 500;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+#auth-submit:hover { background: #f0c96a; }
+#auth-submit:active { transform: scale(0.98); }
+#auth-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+
+/* Toggle link */
+.auth-toggle {
+  text-align: center;
+  font-size: 13px; color: #8a8070;
+  margin-top: 18px;
+}
+.auth-toggle a {
+  color: #c9972a; cursor: pointer;
+  text-decoration: none;
+}
+.auth-toggle a:hover { color: #f0c96a; }
+
+/* Divider */
+.auth-divider {
+  display: flex; align-items: center;
+  gap: 12px; margin: 18px 0;
+}
+.auth-divider hr {
+  flex: 1; border: none;
+  border-top: 1px solid rgba(245,240,232,0.1);
+}
+.auth-divider span {
+  font-size: 12px; color: #5a5248;
+}
+
+/* Google button */
+#auth-google {
+  width: 100%;
+  background: rgba(245,240,232,0.06);
+  border: 1px solid rgba(245,240,232,0.12);
+  border-radius: 9px; padding: 12px;
+  font-size: 14px; color: #f5f0e8;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer; display: flex;
+  align-items: center; justify-content: center;
+  gap: 10px; transition: background 0.2s;
+}
+#auth-google:hover { background: rgba(245,240,232,0.1); }
+#auth-google svg { flex-shrink: 0; }
+
+/* Spinner */
+.auth-spinner {
+  display: inline-block;
+  width: 14px; height: 14px;
+  border: 2px solid rgba(14,13,11,0.3);
+  border-top-color: #0e0d0b;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+  vertical-align: middle; margin-right: 6px;
+}
+
+/* Success state */
+#auth-success {
+  display: none; text-align: center; padding: 10px 0;
+}
+#auth-success.show { display: block; }
+.auth-success-icon {
+  font-size: 48px; margin-bottom: 16px;
+  color: #1D9E75;
+}
+.auth-success-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px; color: #f5f0e8; margin-bottom: 8px;
+}
+.auth-success-sub {
+  font-size: 14px; color: #8a8070; line-height: 1.6;
+}
+
+@keyframes fadeIn  { from{opacity:0} to{opacity:1} }
+@keyframes slideUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+@keyframes spin    { to{transform:rotate(360deg)} }
+</style>
+
+<!-- ══════════════════════════════
+     AUTH MODAL HTML
+══════════════════════════════ -->
+<div id="auth-overlay" onclick="handleOverlayClick(event)">
+  <div id="auth-modal">
+
+    <button id="auth-close" onclick="closeAuth()" aria-label="Close">&#x2715;</button>
+
+    <a href="#" class="auth-logo">Note<span>Pai</span></a>
+
+    <!-- Plan badge (shown when clicking Pro button) -->
+    <div id="auth-plan-badge">
+      ✦ You selected <strong>Pro plan — $9/month</strong>. Create your account to continue.
+    </div>
+
+    <!-- Error message -->
+    <div id="auth-error"></div>
+
+    <!-- Form section -->
+    <div id="auth-form-section">
+      <div class="auth-title" id="auth-title">Welcome back</div>
+      <div class="auth-sub" id="auth-sub">Sign in to your NotePai account</div>
+
+      <!-- Google login -->
+      <button id="auth-google" onclick="googleLogin()">
+        <svg width="18" height="18" viewBox="0 0 24 24">
+          <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+          <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+          <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+          <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+        </svg>
+        Continue with Google
+      </button>
+
+      <div class="auth-divider">
+        <hr><span>or continue with email</span><hr>
+      </div>
+
+      <!-- Name field (signup only) -->
+      <div class="auth-field" id="auth-name-field">
+        <label>Your full name</label>
+        <input type="text" id="auth-name" placeholder="e.g. Jordan Smith" autocomplete="name"/>
+      </div>
+
+      <!-- Email -->
+      <div class="auth-field">
+        <label>Email address</label>
+        <input type="email" id="auth-email" placeholder="you@email.com" autocomplete="email"/>
+      </div>
+
+      <!-- Password -->
+      <div class="auth-field">
+        <label>Password</label>
+        <input type="password" id="auth-password" placeholder="Minimum 6 characters" autocomplete="current-password"/>
+      </div>
+
+      <button id="auth-submit" onclick="handleAuthSubmit()">Sign in</button>
+
+      <div class="auth-toggle">
+        <span id="auth-toggle-text">Don't have an account?</span>
+        <a onclick="toggleAuthMode()" id="auth-toggle-link">Create one free</a>
+      </div>
+    </div>
+
+    <!-- Success screen (shown after signup/login) -->
+    <div id="auth-success">
+      <div class="auth-success-icon">✓</div>
+      <div class="auth-success-title" id="auth-success-title">You're in!</div>
+      <div class="auth-success-sub" id="auth-success-sub">Taking you to your notes...</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     AUTH MODAL JAVASCRIPT
+══════════════════════════════ -->
+<script>
+const API_URL = 'http://localhost:3001/api';
+let authMode = 'login'; // 'login' or 'signup'
+let selectedPlan = null;
+
+/* ── Open modal ── */
+function openAuth(plan) {
+  selectedPlan = plan || null;
+  document.getElementById('auth-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+
+  // Show plan badge if pro was clicked
+  const badge = document.getElementById('auth-plan-badge');
+  if (plan === 'pro') {
+    badge.classList.add('show');
+    // Auto switch to signup mode for pro
+    if (authMode === 'login') toggleAuthMode();
+  } else {
+    badge.classList.remove('show');
+  }
+
+  // Focus email field
+  setTimeout(() => document.getElementById('auth-email').focus(), 300);
+}
+
+/* ── Close modal ── */
+function closeAuth() {
+  document.getElementById('auth-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+  clearAuthError();
+  resetAuthForm();
+}
+
+/* ── Close on backdrop click ── */
+function handleOverlayClick(e) {
+  if (e.target === document.getElementById('auth-overlay')) closeAuth();
+}
+
+/* ── Close on Escape key ── */
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeAuth();
+  if (e.key === 'Enter' && document.getElementById('auth-overlay').classList.contains('open')) {
+    handleAuthSubmit();
+  }
+});
+
+/* ── Toggle between login and signup ── */
+function toggleAuthMode() {
+  authMode = authMode === 'login' ? 'signup' : 'login';
+  const isSignup = authMode === 'signup';
+
+  document.getElementById('auth-title').textContent    = isSignup ? 'Create account' : 'Welcome back';
+  document.getElementById('auth-sub').textContent      = isSignup ? 'Start free — no credit card needed' : 'Sign in to your NotePai account';
+  document.getElementById('auth-submit').textContent   = isSignup ? 'Create my account' : 'Sign in';
+  document.getElementById('auth-toggle-text').textContent = isSignup ? 'Already have an account?' : "Don't have an account?";
+  document.getElementById('auth-toggle-link').textContent  = isSignup ? 'Sign in instead' : 'Create one free';
+  document.getElementById('auth-name-field').classList.toggle('show', isSignup);
+  document.getElementById('auth-password').placeholder = isSignup ? 'Minimum 6 characters' : 'Your password';
+  document.getElementById('auth-password').autocomplete = isSignup ? 'new-password' : 'current-password';
+
+  clearAuthError();
+}
+
+/* ── Show / hide error ── */
+function showAuthError(msg) {
+  const el = document.getElementById('auth-error');
+  el.textContent = msg;
+  el.classList.add('show');
+}
+function clearAuthError() {
+  document.getElementById('auth-error').classList.remove('show');
+}
+
+/* ── Reset form ── */
+function resetAuthForm() {
+  document.getElementById('auth-name').value     = '';
+  document.getElementById('auth-email').value    = '';
+  document.getElementById('auth-password').value = '';
+  document.getElementById('auth-submit').disabled = false;
+  document.getElementById('auth-submit').textContent = authMode === 'signup' ? 'Create my account' : 'Sign in';
+  document.getElementById('auth-success').classList.remove('show');
+  document.getElementById('auth-form-section').style.display = 'block';
+  clearAuthError();
+}
+
+/* ── Show success screen ── */
+function showAuthSuccess(name) {
+  document.getElementById('auth-form-section').style.display = 'none';
+  const success = document.getElementById('auth-success');
+  document.getElementById('auth-success-title').textContent = `Welcome, ${name.split(' ')[0]}! 🎉`;
+  document.getElementById('auth-success-sub').textContent   = 'Your account is ready. Taking you to your notes...';
+  success.classList.add('show');
+}
+
+/* ── Google login (placeholder) ── */
+function googleLogin() {
+  showAuthError('Google login coming soon! Please use email signup for now.');
+}
+
+/* ── Main submit handler ── */
+async function handleAuthSubmit() {
+  clearAuthError();
+
+  const email    = document.getElementById('auth-email').value.trim();
+  const password = document.getElementById('auth-password').value;
+  const name     = document.getElementById('auth-name').value.trim();
+  const btn      = document.getElementById('auth-submit');
+
+  // Basic validation
+  if (!email)    return showAuthError('Please enter your email address.');
+  if (!password) return showAuthError('Please enter your password.');
+  if (authMode === 'signup' && !name) return showAuthError('Please enter your name.');
+  if (password.length < 6) return showAuthError('Password must be at least 6 characters.');
+
+  // Loading state
+  btn.disabled = true;
+  btn.innerHTML = `<span class="auth-spinner"></span>${authMode === 'signup' ? 'Creating account...' : 'Signing in...'}`;
+
+  try {
+    const endpoint = authMode === 'signup' ? '/auth/signup' : '/auth/login';
+    const body     = authMode === 'signup'
+      ? { name, email, password }
+      : { email, password };
+
+    const res  = await fetch(API_URL + endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+    const data = await res.json();
+
+    if (!res.ok) {
+      showAuthError(data.error || 'Something went wrong. Please try again.');
+      btn.disabled = false;
+      btn.textContent = authMode === 'signup' ? 'Create my account' : 'Sign in';
+      return;
+    }
+
+    // Save token
+    localStorage.setItem('notepaiai_token', data.token);
+
+    // Show success
+    showAuthSuccess(data.user.name || email);
+
+    // Redirect to app after 1.5 seconds
+    setTimeout(() => {
+      window.location.href = 'app.html';
+    }, 1500);
+
+  } catch (err) {
+    // Backend not running
+    showAuthError('Cannot connect to server. Make sure the backend is running on port 3001.');
+    btn.disabled = false;
+    btn.textContent = authMode === 'signup' ? 'Create my account' : 'Sign in';
+  }
+}
+
+/* ── Check if already logged in — update nav ── */
+(async () => {
+  const token = localStorage.getItem('notepaiai_token');
+  if (!token) return;
+
+  try {
+    const res = await fetch(API_URL + '/auth/me', {
+      headers: { 'Authorization': 'Bearer ' + token }
+    });
+    if (!res.ok) { localStorage.removeItem('notepaiai_token'); return; }
+
+    const { user } = await res.json();
+    const ctaBtn = document.getElementById('nav-cta-btn');
+    if (ctaBtn && user) {
+      ctaBtn.textContent = 'Go to app →';
+      ctaBtn.onclick = () => window.location.href = 'app.html';
+    }
+  } catch {
+    // Backend offline — ignore silently
+  }
+})();
+</script>
+
+</body>
+</html>
